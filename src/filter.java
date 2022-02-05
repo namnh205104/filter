@@ -26,7 +26,7 @@ public class filter {
 	}
 
 	/**
-	 * Take RGB color from the input image to the array of pixels
+	 * Take RGB color from the input old_pixel to the array of pixels
 	 * 
 	 * @param inImage
 	 * @param old_pixel
@@ -46,7 +46,7 @@ public class filter {
 	}
 
 	/**
-	 * Setup the RGB from the array of pixels to the output image
+	 * Setup the RGB from the array of pixels to the output old_pixel
 	 * 
 	 * @param outImage
 	 * @param old_pixel
@@ -60,7 +60,7 @@ public class filter {
 	}
 
 	/**
-	 * Blur image
+	 * Blur old_pixel
 	 * 
 	 * @param old_pixel
 	 * @param height
@@ -153,7 +153,7 @@ public class filter {
 	}
 
 	/**
-	 * Convert image to inverse
+	 * Convert old_pixel to inverse
 	 * 
 	 * @param old_pixel
 	 * @param height
@@ -170,7 +170,7 @@ public class filter {
 	}
 
 	/**
-	 * Convert image to grayscale
+	 * Convert old_pixel to grayscale
 	 * 
 	 * @param old_pixel
 	 * @param height
@@ -188,7 +188,7 @@ public class filter {
 	}
 
 	/**
-	 * Convert image to sepia
+	 * Convert old_pixel to sepia
 	 * 
 	 * @param old_pixel
 	 * @param height
@@ -214,7 +214,7 @@ public class filter {
 	}
 
 	/**
-	 * Reflect image vertically
+	 * Reflect old_pixel vertically
 	 * 
 	 * @param old_pixel
 	 * @param height
@@ -232,7 +232,7 @@ public class filter {
 	}
 
 	/**
-	 * Reflect image horizontally
+	 * Reflect old_pixel horizontally
 	 * 
 	 * @param old_pixel
 	 * @param height
@@ -264,97 +264,118 @@ public class filter {
 			}
 		}
 		int gx_red, gx_green, gx_blue, gy_red, gy_green, gy_blue, after_red, after_green, after_blue;
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				if (i == 0 && j == 0) {
-					gx_red = old_pixel[i][j + 1].red * 2 + old_pixel[i + 1][j + 1].red;
-					gx_green = old_pixel[i][j + 1].green * 2 + old_pixel[i + 1][j + 1].green;
-					gx_blue = old_pixel[i][j + 1].blue * 2 + old_pixel[i + 1][j + 1].blue;
-					gy_red = old_pixel[i + 1][j].red * 2 + old_pixel[i + 1][j + 1].red;
-					gy_green = old_pixel[i + 1][j].green * 2 + old_pixel[i + 1][j + 1].green;
-					gy_blue = old_pixel[i + 1][j].blue * 2 + old_pixel[i + 1][j + 1].blue;
-				} else if (i == 0 && j == width - 1) {
-					gx_red = old_pixel[i][j - 1].red * -2 - old_pixel[i + 1][j - 1].red;
-					gx_green = old_pixel[i][j - 1].green * -2 - old_pixel[i + 1][j - 1].green;
-					gx_blue = old_pixel[i][j - 1].blue * -2 - old_pixel[i + 1][j - 1].blue;
-					gy_red = old_pixel[i + 1][j - 1].red + old_pixel[i + 1][j].red * 2;
-					gy_green = old_pixel[i + 1][j - 1].green + old_pixel[i + 1][j].green * 2;
-					gy_blue = old_pixel[i + 1][j - 1].blue + old_pixel[i + 1][j].blue * 2;
-				} else if (i == height - 1 && j == 0) {
-					gx_red = old_pixel[i - 1][j + 1].red + old_pixel[i][j + 1].red * 2;
-					gx_green = old_pixel[i - 1][j + 1].green + old_pixel[i][j + 1].green * 2;
-					gx_blue = old_pixel[i - 1][j + 1].blue + old_pixel[i][j + 1].blue * 2;
-					gy_red = old_pixel[i - 1][j].red * -2 - old_pixel[i - 1][j + 1].red;
-					gy_green = old_pixel[i - 1][j].green * -2 - old_pixel[i - 1][j + 1].green;
-					gy_blue = old_pixel[i - 1][j].blue * -2 - old_pixel[i - 1][j + 1].blue;
-				} else if (i == height - 1 && j == width - 1) {
-					gx_red = -old_pixel[i - 1][j - 1].red + old_pixel[i][j - 1].red * -2;
-					gx_green = -old_pixel[i - 1][j - 1].green + old_pixel[i][j - 1].green * -2;
-					gx_blue = -old_pixel[i - 1][j - 1].blue + old_pixel[i][j - 1].blue * -2;
-					gy_red = -old_pixel[i - 1][j - 1].red + old_pixel[i - 1][j].red * -2;
-					gy_green = -old_pixel[i - 1][j - 1].green + old_pixel[i - 1][j].green * -2;
-					gy_blue = -old_pixel[i - 1][j - 1].blue + old_pixel[i - 1][j].blue * -2;
-				} else if (i == 0 && j < width - 1) {
-					gx_red = old_pixel[i][j - 1].red * -2 + old_pixel[i][j + 1].red * 2 - old_pixel[i + 1][j - 1].red
-							+ old_pixel[i + 1][j + 1].red;
-					gx_green = old_pixel[i][j - 1].green * -2 + old_pixel[i][j + 1].green * 2 - old_pixel[i + 1][j - 1].green
-							+ old_pixel[i + 1][j + 1].green;
-					gx_blue = old_pixel[i][j - 1].blue * -2 + old_pixel[i][j + 1].blue * 2 - old_pixel[i + 1][j - 1].blue
-							+ old_pixel[i + 1][j + 1].blue;
-					gy_red = old_pixel[i + 1][j - 1].red + old_pixel[i + 1][j].red * 2 + old_pixel[i + 1][j + 1].red;
-					gy_green = old_pixel[i + 1][j - 1].green + old_pixel[i + 1][j].green * 2 + old_pixel[i + 1][j + 1].green;
-					gy_blue = old_pixel[i + 1][j - 1].blue + old_pixel[i + 1][j].blue * 2 + old_pixel[i + 1][j + 1].blue;
-				} else if (i == height - 1 && j < width - 1) {
-					gx_red = -old_pixel[i - 1][j - 1].red + old_pixel[i - 1][j + 1].red + old_pixel[i][j - 1].red * -2
-							+ old_pixel[i][j + 1].red * 2;
-					gx_green = -old_pixel[i - 1][j - 1].green + old_pixel[i - 1][j + 1].green
-							+ old_pixel[i][j - 1].green * -2 + old_pixel[i][j + 1].green * 2;
-					gx_blue = -old_pixel[i - 1][j - 1].blue + old_pixel[i - 1][j + 1].blue + old_pixel[i][j - 1].blue * -2
-							+ old_pixel[i][j + 1].blue * 2;
-					gy_red = -old_pixel[i - 1][j - 1].red + old_pixel[i - 1][j].red * -2 - old_pixel[i - 1][j + 1].red;
-					gy_green = -old_pixel[i - 1][j - 1].green + old_pixel[i - 1][j].green * -2
-							- old_pixel[i - 1][j + 1].green;
-					gy_blue = -old_pixel[i - 1][j - 1].blue + old_pixel[i - 1][j].blue * -2 - old_pixel[i - 1][j + 1].blue;
-				} else if (j == 0 && i < height - 1) {
-					gx_red = old_pixel[i - 1][j + 1].red + old_pixel[i][j + 1].red * 2 + old_pixel[i + 1][j + 1].red;
-					gx_green = old_pixel[i - 1][j + 1].green + old_pixel[i][j + 1].green * 2 + old_pixel[i + 1][j + 1].green;
-					gx_blue = old_pixel[i - 1][j + 1].blue + old_pixel[i][j + 1].blue * 2 + old_pixel[i + 1][j + 1].blue;
-					gy_red = old_pixel[i - 1][j].red * -2 - old_pixel[i - 1][j + 1].red + old_pixel[i + 1][j].red * 2
-							+ old_pixel[i + 1][j + 1].red;
-					gy_green = old_pixel[i - 1][j].green * -2 - old_pixel[i - 1][j + 1].green + old_pixel[i + 1][j].green * 2
-							+ old_pixel[i + 1][j + 1].green;
-					gy_blue = old_pixel[i - 1][j].blue * -2 - old_pixel[i - 1][j + 1].blue + old_pixel[i + 1][j].blue * 2
-							+ old_pixel[i + 1][j + 1].blue;
-				} else if (j == width - 1 && i < height - 1) {
-					gx_red = -old_pixel[i - 1][j - 1].red + old_pixel[i][j - 1].red * -2 - old_pixel[i + 1][j - 1].red;
-					gx_green = -old_pixel[i - 1][j - 1].green + old_pixel[i][j - 1].green * -2
-							- old_pixel[i + 1][j - 1].green;
-					gx_blue = -old_pixel[i - 1][j - 1].blue + old_pixel[i][j - 1].blue * -2 - old_pixel[i + 1][j - 1].blue;
-					gy_red = -old_pixel[i - 1][j - 1].red + old_pixel[i - 1][j].red * -2 + old_pixel[i + 1][j - 1].red
-							+ old_pixel[i + 1][j].red * 2;
-					gy_green = -old_pixel[i - 1][j - 1].green + old_pixel[i - 1][j].green * -2
-							+ old_pixel[i + 1][j - 1].green + old_pixel[i + 1][j].green * 2;
-					gy_blue = -old_pixel[i - 1][j - 1].blue + old_pixel[i - 1][j].blue * -2 + old_pixel[i + 1][j - 1].blue
-							+ old_pixel[i + 1][j].blue * 2;
-				} else {
-					gx_red = old_pixel[i - 1][j - 1].red * -1 + old_pixel[i - 1][j + 1].red + old_pixel[i][j - 1].red * -2
-							+ old_pixel[i][j + 1].red * 2 + old_pixel[i + 1][j - 1].red * -1 + old_pixel[i + 1][j + 1].red;
-					gx_green = old_pixel[i - 1][j - 1].green * -1 + old_pixel[i - 1][j + 1].green
-							+ old_pixel[i][j - 1].green * -2 + old_pixel[i][j + 1].green * 2
-							+ old_pixel[i + 1][j - 1].green * -1 + old_pixel[i + 1][j + 1].green;
-					gx_blue = old_pixel[i - 1][j - 1].blue * -1 + old_pixel[i - 1][j + 1].blue
-							+ old_pixel[i][j - 1].blue * -2 + old_pixel[i][j + 1].blue * 2 + old_pixel[i + 1][j - 1].blue * -1
-							+ old_pixel[i + 1][j + 1].blue;
-					gy_red = old_pixel[i - 1][j - 1].red * -1 + old_pixel[i - 1][j].red * -2
-							+ old_pixel[i - 1][j + 1].red * -1 + old_pixel[i + 1][j - 1].red + old_pixel[i + 1][j].red * 2
-							+ old_pixel[i + 1][j + 1].red;
-					gy_green = old_pixel[i - 1][j - 1].green * -1 + old_pixel[i - 1][j].green * -2
-							+ old_pixel[i - 1][j + 1].green * -1 + old_pixel[i + 1][j - 1].green
-							+ old_pixel[i + 1][j].green * 2 + old_pixel[i + 1][j + 1].green;
-					gy_blue = old_pixel[i - 1][j - 1].blue * -1 + old_pixel[i - 1][j].blue * -2
-							+ old_pixel[i - 1][j + 1].blue * -1 + old_pixel[i + 1][j - 1].blue * +old_pixel[i + 1][j].blue * 2
-							+ old_pixel[i + 1][j + 1].blue;
-				}
+		for (int i = 0; i < height; i++)
+		{
+			 for (int j = 0; j < width; j++)
+			 {
+				  if (i == 0 && j == 0)
+				  {
+						gx_red=old_pixel[i][j+1].red * 2 + old_pixel[i+1][j+1].red *1;
+						gx_green=(old_pixel[i][j+1].green*2 + old_pixel[i+1][j+1].green*1);
+						gx_blue=(old_pixel[i][j+1].blue*2+old_pixel[i+1][j+1].blue*1);
+  
+						gy_red=(old_pixel[i+1][j].red*2+old_pixel[i+1][j+1].red*1);
+						gy_green=(old_pixel[i+1][j].green*2+old_pixel[i+1][j+1].green*1);
+						gy_blue=(old_pixel[i+1][j].blue*2+old_pixel[i+1][j+1].blue*1);
+				  }
+				  else if(i == 0 && j == width - 1)
+				  {
+						gx_red=(old_pixel[i][j-1].red*-2 +old_pixel[i+1][j-1].red*-1);
+						gx_green=(old_pixel[i][j-1].green*-2 +old_pixel[i+1][j-1].green*-1);
+						gx_blue=( old_pixel[i][j-1].blue*-2 +old_pixel[i+1][j-1].blue*-1);
+  
+						gy_red=(old_pixel[i+1][j-1].red*1+old_pixel[i+1][j].red*2);
+						gy_green=(old_pixel[i+1][j-1].green*1+old_pixel[i+1][j].green*2);
+						gy_blue=( old_pixel[i+1][j-1].blue*1+old_pixel[i+1][j].blue*2);
+				  }
+				  else if(i == height - 1 && j == 0)
+				  {
+						gx_red=(old_pixel[i-1][j+1].red *1+old_pixel[i][j+1].red*2);
+						gx_green=(old_pixel[i-1][j+1].green *1+old_pixel[i][j+1].green*2);
+						gx_blue=(old_pixel[i-1][j+1].blue *1+old_pixel[i][j+1].blue*2);
+  
+						gy_red=(old_pixel[i-1][j].red*-2 + old_pixel[i-1][j+1].red *-1);
+						gy_green=(old_pixel[i-1][j].green*-2 + old_pixel[i-1][j+1].green *-1);
+						gy_blue=(old_pixel[i-1][j].blue*-2 + old_pixel[i-1][j+1].blue *-1);
+				  }
+				  else if(i == height - 1 && j == width - 1)
+				  {
+						gx_red=(old_pixel[i-1][j-1].red*-1 +old_pixel[i][j-1].red*-2);
+						gx_green=(old_pixel[i-1][j-1].green*-1 + old_pixel[i][j-1].green*-2);
+						gx_blue=(old_pixel[i-1][j-1].blue*-1 + old_pixel[i][j-1].blue*-2);
+  
+						gy_red=(old_pixel[i-1][j-1].red*-1 + old_pixel[i-1][j].red*-2);
+						gy_green=(old_pixel[i-1][j-1].green*-1 + old_pixel[i-1][j].green*-2);
+						gy_blue=(old_pixel[i-1][j-1].blue*-1 + old_pixel[i-1][j].blue*-2);
+				  }
+				  else if(i==0 &&j>0 && j<width - 1)
+				  {
+						gx_red=(old_pixel[i][j-1].red*-2 + old_pixel[i][j+1].red*2+old_pixel[i+1][j-1].red*-1+old_pixel[i+1][j+1].red*1);
+						gx_green=(old_pixel[i][j-1].green*-2 + old_pixel[i][j+1].green*2+old_pixel[i+1][j-1].green*-1+old_pixel[i+1][j+1].green*1);
+						gx_blue=(old_pixel[i][j-1].blue*-2 + old_pixel[i][j+1].blue*2+old_pixel[i+1][j-1].blue*-1+old_pixel[i+1][j+1].blue*1);
+  
+						gy_red=(old_pixel[i+1][j-1].red*1+old_pixel[i+1][j].red*2+old_pixel[i+1][j+1].red*1);
+						gy_green=(old_pixel[i+1][j-1].green*1+old_pixel[i+1][j].green*2+old_pixel[i+1][j+1].green*1);
+						gy_blue=(old_pixel[i+1][j-1].blue*1+old_pixel[i+1][j].blue*2+old_pixel[i+1][j+1].blue*1);
+				  }
+				  else if(i==height-1 && j>0 && j<width - 1)
+				  {
+						gx_red=(old_pixel[i-1][j-1].red*-1 + old_pixel[i-1][j+1].red *1+old_pixel[i][j-1].red*-2 + old_pixel[i][j+1].red*2);
+						gx_green=(old_pixel[i-1][j-1].green*-1 + old_pixel[i-1][j+1].green *1+old_pixel[i][j-1].green*-2 + old_pixel[i][j+1].green*2);
+						gx_blue=(old_pixel[i-1][j-1].blue*-1 + old_pixel[i-1][j+1].blue *1+old_pixel[i][j-1].blue*-2 + old_pixel[i][j+1].blue*2);
+  
+						gy_red=(old_pixel[i-1][j-1].red*-1 + old_pixel[i-1][j].red*-2 + old_pixel[i-1][j+1].red *-1);
+						gy_green=(old_pixel[i-1][j-1].green*-1 + old_pixel[i-1][j].green*-2 + old_pixel[i-1][j+1].green *-1);
+						gy_blue=(old_pixel[i-1][j-1].blue*-1 + old_pixel[i-1][j].blue*-2 + old_pixel[i-1][j+1].blue *-1);
+				  }
+				  else if(j==0 && i>0 && i<height - 1)
+				  {
+						gx_red=(old_pixel[i-1][j+1].red *1 + old_pixel[i][j+1].red*2 + old_pixel[i+1][j+1].red*1);
+						gx_green=(old_pixel[i-1][j+1].green *1+ old_pixel[i][j+1].green*2+old_pixel[i+1][j+1].green*1);
+						gx_blue=(old_pixel[i-1][j+1].blue *1 + old_pixel[i][j+1].blue*2 + old_pixel[i+1][j+1].blue*1);
+  
+						gy_red=(old_pixel[i-1][j].red*-2 + old_pixel[i-1][j+1].red *-1+old_pixel[i+1][j].red*2+old_pixel[i+1][j+1].red*1);
+						gy_green=(old_pixel[i-1][j].green*-2 + old_pixel[i-1][j+1].green *-1+old_pixel[i+1][j].green*2+old_pixel[i+1][j+1].green*1);
+						gy_blue=(old_pixel[i-1][j].blue*-2 + old_pixel[i-1][j+1].blue *-1+old_pixel[i+1][j].blue*2+old_pixel[i+1][j+1].blue*1);
+				  }
+				  else if(j==width-1 && i>0 && i<height - 1)
+				  {
+						gx_red=(old_pixel[i-1][j-1].red*-1 +old_pixel[i][j-1].red*-2 +old_pixel[i+1][j-1].red*-1);
+  
+						gx_green=(old_pixel[i-1][j-1].green*-1 +old_pixel[i][j-1].green*-2 +old_pixel[i+1][j-1].green*-1);
+  
+						gx_blue=(old_pixel[i-1][j-1].blue*-1 +old_pixel[i][j-1].blue*-2 +old_pixel[i+1][j-1].blue*-1);
+  
+						gy_red=(old_pixel[i-1][j-1].red*-1 + old_pixel[i-1][j].red*-2 + old_pixel[i+1][j-1].red*1+old_pixel[i+1][j].red*2);
+  
+						gy_green=(old_pixel[i-1][j-1].green*-1 + old_pixel[i-1][j].green*-2 + old_pixel[i+1][j-1].green*1+old_pixel[i+1][j].green*2);
+  
+						gy_blue=(old_pixel[i-1][j-1].blue*-1 + old_pixel[i-1][j].blue*-2 + old_pixel[i+1][j-1].blue*1+old_pixel[i+1][j].blue*2);
+				  }
+				  else
+				  {
+						gx_red=(old_pixel[i-1][j-1].red*-1 + old_pixel[i-1][j].red*0 + old_pixel[i-1][j+1].red *1+
+											old_pixel[i][j-1].red*-2 + old_pixel[i][j].red*0 + old_pixel[i][j+1].red*2+
+											old_pixel[i+1][j-1].red*-1+old_pixel[i+1][j].red*0+old_pixel[i+1][j+1].red*1);
+  
+						gx_green=(old_pixel[i-1][j-1].green*-1 + old_pixel[i-1][j].green*0 + old_pixel[i-1][j+1].green *1+
+											old_pixel[i][j-1].green*-2 + old_pixel[i][j].green*0 + old_pixel[i][j+1].green*2+
+											old_pixel[i+1][j-1].green*-1+old_pixel[i+1][j].green*0+old_pixel[i+1][j+1].green*1);
+  
+						gx_blue=(old_pixel[i-1][j-1].blue*-1 + old_pixel[i-1][j].blue*0 + old_pixel[i-1][j+1].blue *1+
+											old_pixel[i][j-1].blue*-2 + old_pixel[i][j].blue*0 + old_pixel[i][j+1].blue*2+
+											old_pixel[i+1][j-1].blue*-1+old_pixel[i+1][j].blue*0+old_pixel[i+1][j+1].blue*1);
+  
+  
+						gy_red=(old_pixel[i-1][j-1].red*-1 + old_pixel[i-1][j].red*-2 + old_pixel[i-1][j+1].red *-1+
+											old_pixel[i+1][j-1].red*1+old_pixel[i+1][j].red*2+old_pixel[i+1][j+1].red*1);
+  
+						gy_green=(old_pixel[i-1][j-1].green*-1 + old_pixel[i-1][j].green*-2 + old_pixel[i-1][j+1].green *-1+
+											old_pixel[i+1][j-1].green*1+old_pixel[i+1][j].green*2+old_pixel[i+1][j+1].green*1);
+  
+						gy_blue=(old_pixel[i-1][j-1].blue*-1 + old_pixel[i-1][j].blue*-2 + old_pixel[i-1][j+1].blue *-1+
+											old_pixel[i+1][j-1].blue*1+old_pixel[i+1][j].blue*2+old_pixel[i+1][j+1].blue*1);
+				  }
 				after_red = (int) Math.sqrt(gx_red * gx_red + gy_red * gy_red);
 				after_green = (int) Math.sqrt(gx_green * gx_green + gy_green * gy_green);
 				after_blue = (int) Math.sqrt(gx_blue * gx_blue + gy_blue * gy_blue);
@@ -370,7 +391,7 @@ public class filter {
 	}
 
 	/**
-	 * Draw the old image and the filtered image
+	 * Draw the old old_pixel and the filtered old_pixel
 	 * 
 	 * @return
 	 */
@@ -382,7 +403,7 @@ public class filter {
 			int height = inImage.getHeight(), width = inImage.getWidth();
 			RGBColor[][] old_pixel = new RGBColor[height][width];
 			get_RGB_value(inImage, old_pixel);
-			makeBlur(old_pixel, height, width);
+			makeEdges(old_pixel, height, width);
 			outImage = new ImageResource(inImage.getWidth(), inImage.getHeight());
 			// String oldName=inImage.getFileName();
 			set_RGB_value(outImage, old_pixel);
