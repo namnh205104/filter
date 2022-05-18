@@ -388,11 +388,7 @@ public class filter {
 		copy(new_pic, old_pixel, height, width);
 	}
 
-	/**
-	 * Draw the old old_pixel and the filtered old_pixel
-	 * 
-	 * @return
-	 */
+	/** Draw the old old_pixel and the filtered old_pixel */
 	public ImageResource helper() {
 		DirectoryResource dr = new DirectoryResource();
 		ImageResource outImage = null;
@@ -403,21 +399,15 @@ public class filter {
 			get_RGB_value(inImage, old_pixel);
 			makeEdges(old_pixel, height, width);
 			outImage = new ImageResource(inImage.getWidth(), inImage.getHeight());
-			// String oldName=inImage.getFileName();
 			set_RGB_value(outImage, old_pixel);
-			// outImage.setFileName("edges_"+oldName);
 			inImage.draw();
-			// outImage.save();
 			outImage.draw();
 		}
 		return outImage;
 	}
 
 	public static void main(String[] args) {
-		// ImageResource ir=new ImageResource();
 		filter bigFile = new filter();
-		// bigFile.select_and_convert();
 		bigFile.helper();
-		// bigFile.makeInverse(ir).draw();
 	}
 }
