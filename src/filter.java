@@ -14,10 +14,9 @@ public class filter {
 	 * 
 	 * @param old_
 	 * @param new_
-	 * @param height
-	 * @param width
 	 */
-	public void copy(RGBColor[][] old_, RGBColor[][] new_, int height, int width) {
+	public void copy(RGBColor[][] old_, RGBColor[][] new_) {
+		int height = old_.length, width = old_[0].length;
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				new_[i][j] = old_[i][j];
@@ -66,7 +65,8 @@ public class filter {
 	 * @param height
 	 * @param width
 	 */
-	public void makeBlur(RGBColor[][] old_pixel, int height, int width) {
+	public void makeBlur(RGBColor[][] old_pixel) {
+		int height = old_pixel.length, width = old_pixel[0].length;
 		RGBColor[][] new_pic = new RGBColor[height][width];
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
@@ -149,17 +149,21 @@ public class filter {
 				new_pic[i][j].green = new_pixel.green;
 			}
 		}
-		copy(new_pic, old_pixel, height, width);
+		copy(new_pic, old_pixel);
+	}
+
+	public void makeBlur(RGBColor[][] old_pixel, int blurTime) {
+		for (int i = 0; i < blurTime; i++)
+			makeBlur(old_pixel);
 	}
 
 	/**
 	 * Convert image to inverse
 	 * 
 	 * @param old_pixel
-	 * @param height
-	 * @param width
 	 */
-	public void makeInverse(RGBColor[][] old_pixel, int height, int width) {
+	public void makeInverse(RGBColor[][] old_pixel) {
+		int height = old_pixel.length, width = old_pixel[0].length;
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				old_pixel[i][j].red = 255 - old_pixel[i][j].red;
@@ -173,10 +177,9 @@ public class filter {
 	 * Convert image to grayscale
 	 * 
 	 * @param old_pixel
-	 * @param height
-	 * @param width
 	 */
-	public void makeGray(RGBColor[][] old_pixel, int height, int width) {
+	public void makeGray(RGBColor[][] old_pixel) {
+		int height = old_pixel.length, width = old_pixel[0].length;
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				int average = (old_pixel[i][j].blue + old_pixel[i][j].green + old_pixel[i][j].red) / 3;
@@ -191,12 +194,10 @@ public class filter {
 	 * Convert image to sepia
 	 * 
 	 * @param old_pixel
-	 * @param height
-	 * @param width
 	 */
-	public void makeSepia(RGBColor[][] old_pixel, int height, int width) {
+	public void makeSepia(RGBColor[][] old_pixel) {
+		int height = old_pixel.length, width = old_pixel[0].length;
 		RGBColor new_ = new RGBColor();
-		// int red,green,blue;
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				new_.red = (int) (old_pixel[i][j].red * .393 + old_pixel[i][j].green * .769 + old_pixel[i][j].blue + .189);
@@ -217,10 +218,9 @@ public class filter {
 	 * Reflect image vertically
 	 * 
 	 * @param old_pixel
-	 * @param height
-	 * @param width
 	 */
-	public void makeVerticalReflect(RGBColor[][] old_pixel, int height, int width) {
+	public void makeVerticalReflect(RGBColor[][] old_pixel) {
+		int height = old_pixel.length, width = old_pixel[0].length;
 		RGBColor tmp;
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width / 2; j++) {
@@ -235,10 +235,9 @@ public class filter {
 	 * Reflect image horizontally
 	 * 
 	 * @param old_pixel
-	 * @param height
-	 * @param width
 	 */
-	public void makeHorizontalReflect(RGBColor[][] old_pixel, int height, int width) {
+	public void makeHorizontalReflect(RGBColor[][] old_pixel) {
+		int height = old_pixel.length, width = old_pixel[0].length;
 		RGBColor tmp;
 		for (int i = 0; i < height / 2; i++) {
 			for (int j = 0; j < width; j++) {
@@ -253,10 +252,9 @@ public class filter {
 	 * Detect edges
 	 * 
 	 * @param old_pixel
-	 * @param height
-	 * @param width
 	 */
-	public void makeEdges(RGBColor[][] old_pixel, int height, int width) {
+	public void makeEdges(RGBColor[][] old_pixel) {
+		int height = old_pixel.length, width = old_pixel[0].length;
 		RGBColor[][] new_pic = new RGBColor[height][width];
 		RGBColor gx = new RGBColor(), gy = new RGBColor(), after = new RGBColor();
 		for (int i = 0; i < height; i++) {
@@ -385,7 +383,7 @@ public class filter {
 				new_pic[i][j].blue = after.blue;
 			}
 		}
-		copy(new_pic, old_pixel, height, width);
+		copy(new_pic, old_pixel);
 	}
 
 	/** Draw the old old_pixel and the filtered old_pixel */
@@ -397,7 +395,7 @@ public class filter {
 			int height = inImage.getHeight(), width = inImage.getWidth();
 			RGBColor[][] old_pixel = new RGBColor[height][width];
 			get_RGB_value(inImage, old_pixel);
-			makeEdges(old_pixel, height, width);
+			makeBlur(old_pixel, 90);
 			outImage = new ImageResource(inImage.getWidth(), inImage.getHeight());
 			set_RGB_value(outImage, old_pixel);
 			inImage.draw();
